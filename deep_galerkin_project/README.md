@@ -152,10 +152,12 @@ docker run -p 8000:8000 dgm-pricing
 
 ## 📚 Documentation
 
-- [Mathematical Background](docs/math_black_scholes.md)
-- [DGM Architecture](docs/dgm_architecture.md)
-- [Benchmarking](docs/benchmarking.md)
-- [Project Summary](PROJECT_SUMMARY.md)
+- [Getting Started Guide](GETTING_STARTED.md) - Complete beginner tutorial
+- [Cloud Deployment](docs/DEPLOYMENT.md) - Deploy to AWS, GCP, or Azure
+- [Mathematical Background](docs/math_black_scholes.md) - PDE theory and derivations
+- [DGM Architecture](docs/dgm_architecture.md) - Neural network design
+- [Benchmarking](docs/benchmarking.md) - Performance comparisons
+- [Project Summary](PROJECT_SUMMARY.md) - Technical overview
 
 ## 📝 Citation
 
