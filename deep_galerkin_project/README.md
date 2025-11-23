@@ -1,6 +1,6 @@
 # Deep Galerkin Method for Option Pricing
 
-**Production-grade neural PDE solver for quantitative finance** | Fast, accurate, and scalable option pricing using deep learning
+Neural PDE solver for quantitative finance using physics-informed deep learning.
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
@@ -9,19 +9,19 @@
 [![CI](https://github.com/atharvajoshi01/deep-galerkin-pricing/workflows/CI/badge.svg)](https://github.com/atharvajoshi01/deep-galerkin-pricing/actions)
 [![GitHub stars](https://img.shields.io/github/stars/atharvajoshi01/deep-galerkin-pricing?style=social)](https://github.com/atharvajoshi01/deep-galerkin-pricing/stargazers)
 
-## 🎯 Overview
+## Overview
 
-This repository implements the **Deep Galerkin Method (DGM)** for solving partial differential equations (PDEs) in quantitative finance, with a focus on option pricing. DGM uses physics-informed neural networks to solve high-dimensional PDEs that are intractable for traditional finite difference methods.
+This repository implements the Deep Galerkin Method (DGM) for solving PDEs in quantitative finance, focusing on derivatives pricing. DGM uses physics-informed neural networks to solve high-dimensional PDEs that are intractable for traditional finite difference methods.
 
-### Key Features
+### Features
 
-- ✅ **Accurate**: MAE < $0.31 vs analytical Black-Scholes (< 1% error for most scenarios)
-- ⚡ **Fast**: ~12ms to price 1000 options (significantly faster than Monte Carlo)
-- 📈 **Scalable**: Handles multi-dimensional PDEs (2D, 3D+) where traditional methods fail
-- 🎓 **Production-Ready**: 100+ tests, CI/CD, Docker support, comprehensive documentation
-- 🔧 **Extensible**: Modular architecture for custom PDEs and models
+- MAE < $0.31 vs analytical Black-Scholes (< 1% error)
+- ~12ms inference time for 1000 options
+- Scales to multi-dimensional PDEs (2D, 3D+)
+- Modular architecture for custom PDEs and models
+- Comprehensive test suite with 100+ tests
 
-## 📊 Performance
+## Performance
 
 | Metric | Value |
 |--------|-------|
@@ -40,9 +40,7 @@ t=0.00, S=120  │  DGM: $26.41  │  BS: $26.17  │  Error: $0.25 (0.94%)
 t=0.50, S=100  │  DGM: $ 6.81  │  BS: $ 6.89  │  Error: $0.08 (1.12%)
 ```
 
-> 📘 **New to this project?** Check out our [**Getting Started Guide**](GETTING_STARTED.md) for a step-by-step tutorial!
-
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -77,7 +75,7 @@ uvicorn api.main:app --reload
 # API available at http://localhost:8000/docs
 ```
 
-## 📐 Methodology
+## Methodology
 
 DGM solves PDEs by representing the solution as a neural network V(t, S) and minimizing the PDE residual plus boundary/initial conditions.
 
@@ -92,7 +90,7 @@ Custom gated DGM layers with better gradient flow than standard MLPs. Each layer
 - Early stopping with patience of 50 epochs
 - Input normalization to [-1, 1] for numerical stability
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 dgmlib/                 # Core library
@@ -109,7 +107,7 @@ tests/                  # 100+ unit and property-based tests
 docs/                   # Mathematical documentation
 ```
 
-## 🧪 Testing
+## Testing
 
 ```bash
 pytest -v --cov=dgmlib --cov-report=html
@@ -120,22 +118,21 @@ Comprehensive test suite including:
 - Property-based tests (monotonicity, put-call parity, boundary conditions)
 - Integration tests for end-to-end training
 
-## 📈 Supported Models
+## Supported Models
 
-- ✅ Black-Scholes European Options  
-- ✅ Black-Scholes American Options (penalty method)
-- ✅ Barrier Options (up/down, in/out)
-- ✅ Heston Stochastic Volatility (3D PDE)
-- 🚧 Multi-Asset Basket Options (planned)
+- Black-Scholes European Options
+- Black-Scholes American Options (penalty method)
+- Barrier Options (up/down, in/out)
+- Heston Stochastic Volatility (3D PDE)
 
-## 🎯 Use Cases
+## Use Cases
 
 - **Hedge Funds**: Fast pricing for high-frequency trading
 - **Investment Banks**: Complex derivatives pricing
 - **Asset Managers**: Portfolio risk management
 - **Research**: ML for finance, benchmark implementation
 
-## 📊 Benchmarks
+## Benchmarks
 
 | Method | Time (1000 prices) | Accuracy | Dimensions |
 |--------|-------------------|----------|-----------|
@@ -143,14 +140,14 @@ Comprehensive test suite including:
 | Monte Carlo | ~2000ms | MAE $0.15 | Any, but slow |
 | Finite Difference | ~50ms | MAE $0.10 | Fails > 3D |
 
-## 🐳 Docker
+## Docker
 
 ```bash
 docker build -t dgm-pricing .
 docker run -p 8000:8000 dgm-pricing
 ```
 
-## 📚 Documentation
+## Documentation
 
 - [Getting Started Guide](GETTING_STARTED.md) - Complete beginner tutorial
 - [Cloud Deployment](docs/DEPLOYMENT.md) - Deploy to AWS, GCP, or Azure
@@ -159,7 +156,7 @@ docker run -p 8000:8000 dgm-pricing
 - [Benchmarking](docs/benchmarking.md) - Performance comparisons
 - [Project Summary](PROJECT_SUMMARY.md) - Technical overview
 
-## 📝 Citation
+## Citation
 
 ```bibtex
 @software{deep_galerkin_pricing_2025,
@@ -170,10 +167,7 @@ docker run -p 8000:8000 dgm-pricing
 }
 ```
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE)
 
----
-
-**Status**: ✅ Production-Ready | **Version**: 1.0.0 | **Last Updated**: November 2025

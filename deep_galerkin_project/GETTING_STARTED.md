@@ -1,14 +1,14 @@
-# Getting Started with Deep Galerkin Pricing
+# Getting Started
 
-Welcome! This guide will help you get up and running with the Deep Galerkin Method for option pricing in just a few minutes.
+Setup and usage guide for the Deep Galerkin Method option pricing system.
 
-## 📦 Prerequisites
+## Prerequisites
 
 - Python 3.8 or higher
 - pip package manager
 - (Optional) CUDA-capable GPU for faster training
 
-## 🚀 Quick Installation
+## Quick Installation
 
 ### 1. Clone the Repository
 
@@ -31,9 +31,9 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-## 🎓 Your First Model
+## Training a Model
 
-### Train a Black-Scholes European Option Pricer
+### Black-Scholes European Options
 
 ```bash
 python scripts/train.py --config dgmlib/configs/bs_european.yaml
@@ -45,7 +45,7 @@ This trains a model to price European call options with:
 - Volatility σ = 20%
 - Maturity T = 1 year
 
-Training takes ~3 minutes on CPU and achieves **< 1% pricing error**.
+Training takes ~3 minutes on CPU and achieves < 1% pricing error.
 
 ### Validate the Model
 
@@ -55,7 +55,7 @@ python scripts/validate_model.py
 
 This runs comprehensive validation across 26 different market scenarios and computes Greeks.
 
-## 💰 Price Your First Option
+## Pricing Options
 
 ```bash
 python scripts/price_cli.py \
@@ -75,7 +75,7 @@ Delta:  0.615614
 Gamma:  0.019436
 ```
 
-## 📊 Create Visualizations
+## Create Visualizations
 
 Generate beautiful 3D pricing surface plots:
 
@@ -87,7 +87,7 @@ This creates:
 - `plots/pricing_surfaces.png` - DGM vs analytical surfaces
 - `plots/error_heatmap.png` - Pricing error visualization
 
-## 🌐 Launch the Web Interface
+## Launch the Web Interface
 
 ### Option 1: Streamlit Dashboard (Interactive)
 
@@ -120,7 +120,7 @@ curl -X POST "http://localhost:8000/price/european" \
   }'
 ```
 
-## 🧪 Run Tests
+## Run Tests
 
 ```bash
 # Run all tests
@@ -134,7 +134,7 @@ pytest tests/test_pde_residuals.py -v
 pytest tests/property_based/ -v
 ```
 
-## 🔧 Advanced Usage
+## Advanced Usage
 
 ### Train on Different Option Types
 
@@ -187,14 +187,14 @@ gamma = greeks['gamma'].item()
 print(f"Price: ${price:.2f}, Delta: {delta:.4f}, Gamma: {gamma:.6f}")
 ```
 
-## 📚 Next Steps
+## Next Steps
 
 - Read the [Mathematical Background](docs/math_black_scholes.md)
 - Understand the [DGM Architecture](docs/dgm_architecture.md)
 - Check out [Benchmarking Results](docs/benchmarking.md)
 - Explore the [Full Project Summary](PROJECT_SUMMARY.md)
 
-## 💡 Common Issues
+## Common Issues
 
 ### Issue: Training is slow
 **Solution:** Reduce `n_interior` and `n_boundary` in the config file, or enable GPU training.
@@ -205,12 +205,9 @@ print(f"Price: ${price:.2f}, Delta: {delta:.4f}, Gamma: {gamma:.6f}")
 ### Issue: Import errors
 **Solution:** Make sure you installed the package with `pip install -e .`
 
-## 🤝 Getting Help
+## Getting Help
 
 - Check the [issues page](https://github.com/atharvajoshi01/deep-galerkin-pricing/issues)
 - Read the [documentation](docs/)
 - Review example scripts in `scripts/`
 
-## 🎉 You're Ready!
-
-You now have a production-grade neural PDE solver for quantitative finance. Happy pricing! 🚀
