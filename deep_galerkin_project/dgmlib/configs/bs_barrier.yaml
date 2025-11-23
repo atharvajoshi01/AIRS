@@ -1,0 +1,78 @@
+# Black-Scholes Barrier Option Configuration
+
+experiment_name: "bs_barrier_upout_call"
+seed: 42
+
+# PDE parameters
+pde:
+  type: "black_scholes_barrier"
+  r: 0.05
+  sigma: 0.2
+  K: 100.0
+  T: 1.0
+  barrier: 150.0
+  barrier_type: "up-and-out"  # up-and-out, down-and-out, up-and-in, down-and-in
+  option_type: "call"
+  S_min: 0.0
+  S_max: 150.0  # Limited by barrier
+
+# Model architecture
+model:
+  type: "dgm"
+  input_dim: 2
+  hidden_dim: 50
+  output_dim: 1
+  num_layers: 3
+  activation: "tanh"
+  use_spectral_norm: false
+  dropout: 0.0
+
+# Training configuration
+training:
+  epochs: 1500
+  n_interior: 2500
+  n_boundary: 300  # More boundary points for barrier
+  n_initial: 200
+
+  optimizer: "adam"
+  learning_rate: 1e-3
+  weight_decay: 1e-5
+
+  lambda_pde: 1.0
+  lambda_bc: 2.0  # Higher weight for barrier BC
+  lambda_ic: 10.0
+
+  use_amp: false
+  gradient_clip: 1.0
+
+  use_scheduler: true
+  scheduler_type: "cosine"
+  warmup_epochs: 50
+
+  early_stopping: true
+  patience: 75
+  min_delta: 1e-6
+
+# Sampling
+sampling:
+  method: "sobol"
+  use_curriculum: false
+
+# Validation
+validation:
+  n_points: 1000
+  compare_analytical: false
+  compare_mc: true
+
+# Logging
+logging:
+  log_interval: 10
+  save_checkpoints: true
+  checkpoint_dir: "checkpoints/bs_barrier"
+  log_dir: "logs/bs_barrier"
+
+# Evaluation
+evaluation:
+  S_grid_size: 100
+  t_grid_size: 50
+  compute_greeks: true

@@ -1,0 +1,262 @@
+[
+  {
+    "name": "ATM_vol10_T0.25",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.1,
+    "T": 0.25,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol10_T0.5",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.1,
+    "T": 0.5,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol10_T1.0",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.1,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol10_T2.0",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.1,
+    "T": 2.0,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol20_T0.25",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 0.25,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol20_T0.5",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 0.5,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol20_T1.0",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol20_T2.0",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 2.0,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol30_T0.25",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.3,
+    "T": 0.25,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol30_T0.5",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.3,
+    "T": 0.5,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol30_T1.0",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.3,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol30_T2.0",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.3,
+    "T": 2.0,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol40_T0.25",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.4,
+    "T": 0.25,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol40_T0.5",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.4,
+    "T": 0.5,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol40_T1.0",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.4,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ATM_vol40_T2.0",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.4,
+    "T": 2.0,
+    "option_type": "call",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "ITM_K80",
+    "S": 100.0,
+    "K": 80.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "itm"
+  },
+  {
+    "name": "ITM_K90",
+    "S": 100.0,
+    "K": 90.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "itm"
+  },
+  {
+    "name": "OTM_K110",
+    "S": 100.0,
+    "K": 110.00000000000001,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "otm"
+  },
+  {
+    "name": "OTM_K120",
+    "S": 100.0,
+    "K": 120.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "otm"
+  },
+  {
+    "name": "ATM_put",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 1.0,
+    "option_type": "put",
+    "scenario_type": "standard"
+  },
+  {
+    "name": "deep_ITM",
+    "S": 100.0,
+    "K": 50.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "extreme"
+  },
+  {
+    "name": "deep_OTM",
+    "S": 100.0,
+    "K": 150.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "extreme"
+  },
+  {
+    "name": "high_vol",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.8,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "stress"
+  },
+  {
+    "name": "low_vol",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.05,
+    "T": 1.0,
+    "option_type": "call",
+    "scenario_type": "stress"
+  },
+  {
+    "name": "near_maturity",
+    "S": 100.0,
+    "K": 100.0,
+    "r": 0.05,
+    "sigma": 0.2,
+    "T": 0.01,
+    "option_type": "call",
+    "scenario_type": "stress"
+  }
+]

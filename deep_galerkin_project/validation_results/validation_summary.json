@@ -1,0 +1,9 @@
+{
+  "total_scenarios": 26,
+  "mean_price_error": 7.929349044503995,
+  "max_price_error": 42.05635383926879,
+  "mean_price_error_pct": 217.77201470557358,
+  "mean_delta_error": 0.15972782128571966,
+  "mean_gamma_error": 0.018533320537458573,
+  "pass_threshold": false
+}
