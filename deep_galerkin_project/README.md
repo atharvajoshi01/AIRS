@@ -6,6 +6,8 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![CI](https://github.com/atharvajoshi01/deep-galerkin-pricing/workflows/CI/badge.svg)](https://github.com/atharvajoshi01/deep-galerkin-pricing/actions)
+[![GitHub stars](https://img.shields.io/github/stars/atharvajoshi01/deep-galerkin-pricing?style=social)](https://github.com/atharvajoshi01/deep-galerkin-pricing/stargazers)
 
 ## 🎯 Overview
 
@@ -38,12 +40,14 @@ t=0.00, S=120  │  DGM: $26.41  │  BS: $26.17  │  Error: $0.25 (0.94%)
 t=0.50, S=100  │  DGM: $ 6.81  │  BS: $ 6.89  │  Error: $0.08 (1.12%)
 ```
 
+> 📘 **New to this project?** Check out our [**Getting Started Guide**](GETTING_STARTED.md) for a step-by-step tutorial!
+
 ## 🚀 Quick Start
 
 ### Installation
 
 ```bash
-git clone https://github.com/your-username/deep-galerkin-pricing.git
+git clone https://github.com/atharvajoshi01/deep-galerkin-pricing.git
 cd deep-galerkin-pricing
 python -m venv venv
 source venv/bin/activate
@@ -158,8 +162,9 @@ docker run -p 8000:8000 dgm-pricing
 ```bibtex
 @software{deep_galerkin_pricing_2025,
   title = {Deep Galerkin Method for Option Pricing},
+  author = {Atharva Joshi},
   year = {2025},
-  url = {https://github.com/your-username/deep-galerkin-pricing}
+  url = {https://github.com/atharvajoshi01/deep-galerkin-pricing}
 }
 ```
 
