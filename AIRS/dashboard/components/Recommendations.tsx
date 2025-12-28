@@ -1,6 +1,6 @@
 'use client';
 
-import { RecommendationData, AssetRecommendation } from '@/lib/api';
+import { RecommendationData } from '@/lib/api';
 
 interface RecommendationsProps {
   data: RecommendationData | null;
@@ -8,21 +8,22 @@ interface RecommendationsProps {
 }
 
 function ActionBadge({ action }: { action: string }) {
-  const colors = {
-    BUY: 'bg-green-500/20 text-green-400',
-    SELL: 'bg-red-500/20 text-red-400',
-    HOLD: 'bg-gray-500/20 text-gray-400',
+  const colors: Record<string, string> = {
+    buy: 'bg-green-500/20 text-green-400',
+    sell: 'bg-red-500/20 text-red-400',
+    hold: 'bg-gray-500/20 text-gray-400',
   };
 
   return (
-    <span className={`px-2 py-0.5 rounded text-xs font-medium ${colors[action as keyof typeof colors] || colors.HOLD}`}>
+    <span className={`px-2 py-0.5 rounded text-xs font-medium uppercase ${colors[action] || colors.hold}`}>
       {action}
     </span>
   );
 }
 
-function ChangeIndicator({ change }: { change: number }) {
-  if (change === 0) return <span className="text-gray-500">—</span>;
+function ChangeIndicator({ current, target }: { current: number; target: number }) {
+  const change = ((target - current) / current) * 100;
+  if (Math.abs(change) < 1) return <span className="text-gray-500">—</span>;
 
   const isPositive = change > 0;
   return (
@@ -61,10 +62,10 @@ export default function Recommendations({ data, isLoading }: RecommendationsProp
     <div className="card">
       <h2 className="text-lg font-semibold text-gray-400 mb-4">Recommendations</h2>
 
-      {/* Rationale */}
-      {data.rationale && (
+      {/* Summary */}
+      {data.summary && (
         <p className="text-sm text-gray-400 mb-4 p-3 bg-gray-800/50 rounded-lg">
-          {data.rationale}
+          {data.summary}
         </p>
       )}
 
@@ -82,8 +83,8 @@ export default function Recommendations({ data, isLoading }: RecommendationsProp
           </thead>
           <tbody>
             {data.asset_recommendations.map((rec) => (
-              <tr key={rec.asset} className="border-b border-gray-800/50">
-                <td className="py-3 font-medium">{rec.asset}</td>
+              <tr key={rec.symbol} className="border-b border-gray-800/50">
+                <td className="py-3 font-medium">{rec.symbol}</td>
                 <td className="py-3 text-right text-gray-400">
                   {(rec.current_weight * 100).toFixed(0)}%
                 </td>
@@ -91,7 +92,7 @@ export default function Recommendations({ data, isLoading }: RecommendationsProp
                   {(rec.target_weight * 100).toFixed(0)}%
                 </td>
                 <td className="py-3 text-right">
-                  <ChangeIndicator change={rec.change_pct} />
+                  <ChangeIndicator current={rec.current_weight} target={rec.target_weight} />
                 </td>
                 <td className="py-3 text-right">
                   <ActionBadge action={rec.action} />
@@ -102,9 +103,16 @@ export default function Recommendations({ data, isLoading }: RecommendationsProp
         </table>
       </div>
 
+      {/* Timeline */}
+      {data.suggested_timeline && (
+        <p className="text-xs text-gray-500 mt-4">
+          {data.suggested_timeline}
+        </p>
+      )}
+
       {/* Timestamp */}
-      <p className="text-xs text-gray-600 mt-4">
-        Last updated: {new Date(data.generated_at).toLocaleString()}
+      <p className="text-xs text-gray-600 mt-2">
+        Last updated: {new Date(data.timestamp).toLocaleString()}
       </p>
     </div>
   );
