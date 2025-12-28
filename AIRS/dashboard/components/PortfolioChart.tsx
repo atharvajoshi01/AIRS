@@ -8,12 +8,13 @@ interface PortfolioChartProps {
   isLoading: boolean;
 }
 
-const COLORS = {
+const COLORS: Record<string, string> = {
   SPY: '#3b82f6',
   VEU: '#8b5cf6',
   AGG: '#22c55e',
   DJP: '#f59e0b',
   VNQ: '#ec4899',
+  CASH: '#6b7280',
 };
 
 export default function PortfolioChart({ data, isLoading }: PortfolioChartProps) {
@@ -38,15 +39,15 @@ export default function PortfolioChart({ data, isLoading }: PortfolioChartProps)
   }
 
   const currentData = data.asset_recommendations.map(r => ({
-    name: r.asset,
+    name: r.symbol,
     value: r.current_weight * 100,
-    color: COLORS[r.asset as keyof typeof COLORS] || '#6b7280',
+    color: COLORS[r.symbol] || '#6b7280',
   }));
 
   const targetData = data.asset_recommendations.map(r => ({
-    name: r.asset,
+    name: r.symbol,
     value: r.target_weight * 100,
-    color: COLORS[r.asset as keyof typeof COLORS] || '#6b7280',
+    color: COLORS[r.symbol] || '#6b7280',
   }));
 
   return (
