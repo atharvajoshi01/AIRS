@@ -1,0 +1,168 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database with TimescaleDB extension
+  postgres:
+    image: timescale/timescaledb:latest-pg15
+    container_name: airs-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-airs}
+      POSTGRES_USER: ${POSTGRES_USER:-airs}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-airs_dev_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-airs} -d ${POSTGRES_DB:-airs}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Redis for caching and Celery broker
+  redis:
+    image: redis:7-alpine
+    container_name: airs-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # MLflow Tracking Server
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.9.2
+    container_name: airs-mlflow
+    environment:
+      MLFLOW_BACKEND_STORE_URI: postgresql://${POSTGRES_USER:-airs}:${POSTGRES_PASSWORD:-airs_dev_password}@postgres:5432/mlflow
+      MLFLOW_DEFAULT_ARTIFACT_ROOT: /mlflow/artifacts
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_artifacts:/mlflow/artifacts
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      mlflow server
+      --backend-store-uri postgresql://${POSTGRES_USER:-airs}:${POSTGRES_PASSWORD:-airs_dev_password}@postgres:5432/mlflow
+      --default-artifact-root /mlflow/artifacts
+      --host 0.0.0.0
+      --port 5000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # AIRS API Service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    container_name: airs-api
+    environment:
+      - AIRS_ENV=${AIRS_ENV:-development}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-airs}:${POSTGRES_PASSWORD:-airs_dev_password}@postgres:5432/${POSTGRES_DB:-airs}
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - REDIS_URL=redis://redis:6379/0
+      - FRED_API_KEY=${FRED_API_KEY:-}
+      - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY:-}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Airflow Webserver
+  airflow-webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: airflow
+    container_name: airs-airflow-webserver
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql://${POSTGRES_USER:-airs}:${POSTGRES_PASSWORD:-airs_dev_password}@postgres:5432/airflow
+      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW_FERNET_KEY:-}
+      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW_SECRET_KEY:-}
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+      - AIRS_DATABASE_URL=postgresql://${POSTGRES_USER:-airs}:${POSTGRES_PASSWORD:-airs_dev_password}@postgres:5432/${POSTGRES_DB:-airs}
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - FRED_API_KEY=${FRED_API_KEY:-}
+      - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY:-}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+      - airflow_logs:/opt/airflow/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: webserver
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    profiles:
+      - airflow
+
+  # Airflow Scheduler
+  airflow-scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: airflow
+    container_name: airs-airflow-scheduler
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql://${POSTGRES_USER:-airs}:${POSTGRES_PASSWORD:-airs_dev_password}@postgres:5432/airflow
+      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW_FERNET_KEY:-}
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+      - AIRS_DATABASE_URL=postgresql://${POSTGRES_USER:-airs}:${POSTGRES_PASSWORD:-airs_dev_password}@postgres:5432/${POSTGRES_DB:-airs}
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - FRED_API_KEY=${FRED_API_KEY:-}
+      - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY:-}
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+      - airflow_logs:/opt/airflow/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: scheduler
+    restart: unless-stopped
+    profiles:
+      - airflow
+
+volumes:
+  postgres_data:
+  redis_data:
+  mlflow_artifacts:
+  airflow_logs:
+
+networks:
+  default:
+    name: airs-network
