@@ -1,0 +1,294 @@
+# Asset Universe Configuration for AIRS
+# Defines the multi-asset portfolio and data sources
+
+portfolio:
+  name: "Multi-Asset Diversified"
+  description: "Diversified portfolio across stocks, bonds, commodities, REITs, and international"
+
+  # Target allocation weights (must sum to 1.0)
+  allocations:
+    us_equity: 0.40      # SPY - S&P 500
+    intl_equity: 0.20    # VEU - FTSE All-World ex-US
+    bonds: 0.25          # AGG - US Aggregate Bond
+    commodities: 0.10    # DJP - iPath Bloomberg Commodity
+    reits: 0.05          # VNQ - Vanguard Real Estate
+
+assets:
+  # Core Portfolio Assets
+  portfolio:
+    SPY:
+      name: "SPDR S&P 500 ETF"
+      asset_class: "us_equity"
+      source: "yahoo"
+    VEU:
+      name: "Vanguard FTSE All-World ex-US ETF"
+      asset_class: "intl_equity"
+      source: "yahoo"
+    AGG:
+      name: "iShares Core US Aggregate Bond ETF"
+      asset_class: "bonds"
+      source: "yahoo"
+    DJP:
+      name: "iPath Bloomberg Commodity Index"
+      asset_class: "commodities"
+      source: "yahoo"
+    VNQ:
+      name: "Vanguard Real Estate ETF"
+      asset_class: "reits"
+      source: "yahoo"
+
+  # Sector ETFs for analysis
+  sectors:
+    XLF:
+      name: "Financial Select Sector SPDR"
+      source: "yahoo"
+    XLE:
+      name: "Energy Select Sector SPDR"
+      source: "yahoo"
+    XLK:
+      name: "Technology Select Sector SPDR"
+      source: "yahoo"
+    XLV:
+      name: "Health Care Select Sector SPDR"
+      source: "yahoo"
+    XLI:
+      name: "Industrial Select Sector SPDR"
+      source: "yahoo"
+    XLP:
+      name: "Consumer Staples Select Sector SPDR"
+      source: "yahoo"
+    XLY:
+      name: "Consumer Discretionary Select Sector SPDR"
+      source: "yahoo"
+    XLU:
+      name: "Utilities Select Sector SPDR"
+      source: "yahoo"
+    XLB:
+      name: "Materials Select Sector SPDR"
+      source: "yahoo"
+    XLRE:
+      name: "Real Estate Select Sector SPDR"
+      source: "yahoo"
+
+  # Additional indices and assets
+  indices:
+    QQQ:
+      name: "Invesco QQQ (Nasdaq 100)"
+      source: "yahoo"
+    IWM:
+      name: "iShares Russell 2000 ETF"
+      source: "yahoo"
+    EEM:
+      name: "iShares MSCI Emerging Markets ETF"
+      source: "yahoo"
+    EFA:
+      name: "iShares MSCI EAFE ETF"
+      source: "yahoo"
+
+  # Commodities
+  commodities:
+    GLD:
+      name: "SPDR Gold Shares"
+      source: "yahoo"
+    USO:
+      name: "United States Oil Fund"
+      source: "yahoo"
+    DBA:
+      name: "Invesco DB Agriculture Fund"
+      source: "yahoo"
+
+  # Volatility products
+  volatility:
+    "^VIX":
+      name: "CBOE Volatility Index"
+      source: "yahoo"
+    VXX:
+      name: "iPath Series B S&P 500 VIX Short-Term Futures"
+      source: "yahoo"
+
+# FRED Series for Economic Data
+fred_series:
+  # Treasury Yields
+  yields:
+    DGS2:
+      name: "2-Year Treasury Constant Maturity Rate"
+      frequency: "daily"
+      units: "percent"
+    DGS5:
+      name: "5-Year Treasury Constant Maturity Rate"
+      frequency: "daily"
+      units: "percent"
+    DGS10:
+      name: "10-Year Treasury Constant Maturity Rate"
+      frequency: "daily"
+      units: "percent"
+    DGS30:
+      name: "30-Year Treasury Constant Maturity Rate"
+      frequency: "daily"
+      units: "percent"
+    DTB3:
+      name: "3-Month Treasury Bill Secondary Market Rate"
+      frequency: "daily"
+      units: "percent"
+
+  # Yield Spreads
+  spreads:
+    T10Y2Y:
+      name: "10-Year Treasury Minus 2-Year Treasury"
+      frequency: "daily"
+      units: "percent"
+    T10Y3M:
+      name: "10-Year Treasury Minus 3-Month Treasury"
+      frequency: "daily"
+      units: "percent"
+
+  # Credit Spreads
+  credit:
+    BAMLC0A0CM:
+      name: "ICE BofA US Corporate Index Option-Adjusted Spread"
+      frequency: "daily"
+      units: "percent"
+    BAMLH0A0HYM2:
+      name: "ICE BofA US High Yield Index Option-Adjusted Spread"
+      frequency: "daily"
+      units: "percent"
+
+  # Interest Rates
+  rates:
+    SOFR:
+      name: "Secured Overnight Financing Rate"
+      frequency: "daily"
+      units: "percent"
+    FEDFUNDS:
+      name: "Federal Funds Effective Rate"
+      frequency: "daily"
+      units: "percent"
+    TEDRATE:
+      name: "TED Spread"
+      frequency: "daily"
+      units: "percent"
+
+  # Macro Indicators
+  macro:
+    USSLIND:
+      name: "Leading Index for the United States"
+      frequency: "monthly"
+      units: "index"
+      release_lag_days: 21  # ~3 weeks after month end
+    MANEMP:
+      name: "All Employees, Manufacturing"
+      frequency: "monthly"
+      units: "thousands"
+      release_lag_days: 3
+    ICSA:
+      name: "Initial Claims"
+      frequency: "weekly"
+      units: "number"
+      release_lag_days: 5
+    UMCSENT:
+      name: "University of Michigan Consumer Sentiment"
+      frequency: "monthly"
+      units: "index"
+      release_lag_days: 14
+    PERMIT:
+      name: "New Privately-Owned Housing Units Authorized"
+      frequency: "monthly"
+      units: "thousands"
+      release_lag_days: 18
+
+  # Financial Conditions
+  financial:
+    NFCI:
+      name: "Chicago Fed National Financial Conditions Index"
+      frequency: "weekly"
+      units: "index"
+      release_lag_days: 7
+    ANFCI:
+      name: "Chicago Fed Adjusted National Financial Conditions Index"
+      frequency: "weekly"
+      units: "index"
+      release_lag_days: 7
+
+  # Volatility
+  volatility:
+    VIXCLS:
+      name: "CBOE Volatility Index (VIX)"
+      frequency: "daily"
+      units: "index"
+
+# Data Quality Settings
+data_quality:
+  # Missing data handling
+  max_missing_pct: 0.05  # Max 5% missing values
+  forward_fill_limit: 5  # Max days to forward fill
+
+  # Outlier detection
+  outlier_std_threshold: 5.0  # Flag values > 5 std from mean
+  winsorize_percentile: 0.01  # Winsorize at 1st/99th percentile
+
+  # Stale data detection
+  max_stale_days: 3  # Alert if data older than 3 days
+
+# Feature Engineering Settings
+features:
+  # Rolling window sizes
+  rolling_windows: [5, 10, 21, 63, 126, 252]  # Trading days
+
+  # Percentile lookback
+  percentile_lookback: 252  # 1 year for percentile rankings
+
+  # Correlation windows
+  correlation_windows: [21, 63]  # 1 month, 3 months
+
+  # Z-score lookback
+  zscore_lookback: 252  # 1 year for z-score calculation
+
+# Regime Detection Settings
+regime:
+  # HMM settings
+  n_states: 3  # Low-vol, High-vol, Transition
+  n_iterations: 100
+
+  # Threshold-based regime detection
+  vix_thresholds:
+    low: 15
+    normal: 25
+    elevated: 35
+
+  credit_spread_thresholds:  # HY spread in bps
+    low: 300
+    normal: 500
+    elevated: 700
+
+# Model Settings
+model:
+  # Training parameters
+  train_start: "2010-01-01"
+  train_end: "2017-12-31"
+  validation_start: "2018-01-01"
+  validation_end: "2018-12-31"
+  test_start: "2019-01-01"
+
+  # Walk-forward settings
+  retrain_frequency: "quarterly"  # quarterly, monthly, annually
+  embargo_days: 5  # Gap between train and test
+
+  # Class balance
+  positive_class_weight: 10  # Weight for minority class
+
+# Backtest Settings
+backtest:
+  # Transaction costs
+  trading_cost_bps: 10
+  slippage_bps: 5
+
+  # Rebalancing
+  min_rebalance_threshold: 0.02  # Min 2% weight change to trade
+  max_daily_turnover: 0.20  # Max 20% portfolio turnover per day
+
+  # De-risking parameters
+  derisk_equity_reduction: 0.50  # Reduce equity by 50%
+  rerisk_days: 5  # Days to gradually re-risk
+
+  # Signal application
+  signal_lag_days: 1  # Apply signal next day
